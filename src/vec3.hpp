@@ -49,10 +49,6 @@ struct vec3
         vec3& operator/=(const vec3& that);
         vec3& operator*=(const float t);
         vec3& operator/=(const float t);
-
-        // comparison operators
-        //bool operator==(const vec3& that) const;
-        //bool operator!=(const vec3& that) const;
 };
 
 

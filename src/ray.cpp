@@ -41,17 +41,3 @@ vec3 ray::point_at_parameter(float t) const
     return this->A + t * this->B;
 }
 
-// ==== operators ==== //
-//bool ray::operator==(const ray& that) const
-//{
-//    if(this->A != that.A)
-//        return false;
-//    if(this->B != that.B)
-//        return false;
-//    return true;
-//}
-//
-//bool ray::operator!=(const ray& that) const
-//{
-//    return !(*this == that);
-//}

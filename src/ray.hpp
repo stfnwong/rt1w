@@ -26,10 +26,6 @@ struct ray
         vec3 origin(void) const;
         vec3 direction(void) const;
         vec3 point_at_parameter(float t) const;
-
-        // operators
-        //bool operator==(const ray& that) const;
-        //bool operator!=(const ray& that) const;
 };
 
 
