@@ -12,7 +12,7 @@
 vec3::vec3()
 {
     for(int i = 0; i < 3; ++i)
-        this->e[i] = 0;
+        this->e[i] = 0.0f;
 }
 
 vec3::vec3(float e0, float e1, float e2)
