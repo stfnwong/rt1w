@@ -8,10 +8,30 @@
 #include <iostream>
 #include "ray.hpp"
 
+
+// Simple sphere intersection test
+bool hit_sphere(const vec3& center, float radius, const ray& r)
+{
+    vec3 oc = r.origin() - center;
+
+    float a = dot(r.direction(), r.direction());
+    float b = 2.0 * dot(oc, r.direction());
+    float c = dot(oc, oc) - radius * radius;
+    float disc = b * b - 4 * a * c;     // solve quadratic, number of roots = number of intersections
+
+    return (disc > 0) ? true : false;
+}
+
+
 vec3 color(const ray& r)
 {
     float t;
     vec3 unit_direction;
+    // sphere at -1 on z-axis
+    vec3 sphere_pos(0.0, 0.0, -1.0);
+
+    if(hit_sphere(sphere_pos, 0.5, r))
+        return vec3(1, 0, 0);           // color sphere red
 
     unit_direction = unit_vector(r.direction());
     t = 0.5f * (unit_direction.y() + 1.0);
