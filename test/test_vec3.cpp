@@ -178,7 +178,60 @@ TEST_F(TestVec3, test_squared_length)
 }
 
 
-// TODO : test cross, dot
+// Vector arithmetic 
+TEST_F(TestVec3, test_dot)
+{
+    vec3 test_vec1(1.0, 1.0, 1.0);
+    vec3 test_vec2(1.0, 1.0, 1.0);
+    float dot_output;
+
+    dot_output = dot(test_vec1, test_vec2);
+    EXPECT_FLOAT_EQ(3.0, dot_output);
+
+    // update vectors
+    test_vec1 += vec3(1.0, 0.0, 0.5);
+    test_vec2 += vec3(2.0, 2.0, 2.5);
+    // check the updates were applied
+    EXPECT_FLOAT_EQ(2.0, test_vec1[0]);
+    EXPECT_FLOAT_EQ(1.0, test_vec1[1]);
+    EXPECT_FLOAT_EQ(1.5, test_vec1[2]);
+
+    EXPECT_FLOAT_EQ(3.0, test_vec2[0]);
+    EXPECT_FLOAT_EQ(3.0, test_vec2[1]);
+    EXPECT_FLOAT_EQ(3.5, test_vec2[2]);
+
+    dot_output = dot(test_vec1, test_vec2);
+    EXPECT_FLOAT_EQ(14.25, dot_output);
+}
+
+TEST_F(TestVec3, test_cross)
+{
+    vec3 test_vec1(1.0, 1.0, 1.0);
+    vec3 test_vec2(1.0, 1.0, 1.0);
+    vec3 cross_output;
+
+    cross_output = cross(test_vec1, test_vec2);
+
+    EXPECT_FLOAT_EQ(0.0, cross_output[0]);
+    EXPECT_FLOAT_EQ(-2.0, cross_output[1]);
+    EXPECT_FLOAT_EQ(0.0, cross_output[2]);
+    
+    // update vectors 
+    test_vec1 += vec3(1.0, 1.0, 1.0);
+    // test_vec1 = (2.0, 2.0, 2.0)
+    cross_output = cross(test_vec1, test_vec2);
+    EXPECT_FLOAT_EQ(0.0, cross_output[0]);
+    EXPECT_FLOAT_EQ(-4.0, cross_output[1]);
+    EXPECT_FLOAT_EQ(0.0, cross_output[2]);
+
+    // update vectors again
+    test_vec2 = vec3(-1.0, -2.0, -3.0);
+    // test_vec2 = (-2.0, -3.0, -4.0)
+    cross_output = cross(test_vec1, test_vec2);
+    EXPECT_FLOAT_EQ(-2.0, cross_output[0]);
+    EXPECT_FLOAT_EQ(8.0, cross_output[1]);
+    EXPECT_FLOAT_EQ(-2.0, cross_output[2]);
+}
 
 
 int main(int argc, char *argv[])

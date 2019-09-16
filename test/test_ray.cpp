@@ -22,6 +22,7 @@ class TestRay : public ::testing::Test
     virtual void TearDown() {}
 };
 
+
 TEST_F(TestRay, test_ray_init)
 {
     ray test_ray;
