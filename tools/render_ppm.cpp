@@ -5,57 +5,60 @@
  * Stefan Wong 2019
  */
 
+#define MAXFLOAT 200
+
 #include <iostream>
-#include "ray.hpp"
+#include "sphere.hpp"
+#include "hittable_list.hpp"
 
-// Return normal vector of sphere. Maps normal vectors to the range [-1, 1]
-float hit_sphere(const vec3& center, float radius, const ray& r)
-{
-    float a, b, c, disc;
-    vec3 oc = r.origin() - center;
+// TODO : add arg parser
 
-    a = dot(r.direction(), r.direction());
-    b = 2.0 * dot(oc, r.direction());
-    c = dot(oc, oc) - radius * radius;
-    disc = b * b - 4 * a * c;     // solve quadratic, number of roots = number of intersections
-
-    if(disc < 0)
-        return -1.0;
-    else
-        return (-b - sqrt(disc)) / (2.0 * a);
-}
 
 
 // Now adjusted for simple normal visualization
-vec3 color(const ray& r)
+vec3 color(const ray& r, hittable* world)
 {
     float t;
     vec3 unit_direction;
-    vec3 N;
-    // sphere at -1 on z-axis
-    vec3 sphere_pos(0.0, 0.0, -1.0);
+    hit_record rec;
 
-    t = hit_sphere(sphere_pos, 0.5, r);
-    if(t > 0.0)
+    if(world->hit(r, 0.0, MAXFLOAT, rec))
     {
-        N = unit_vector(r.point_at_parameter(t) - sphere_pos);
-        return 0.5 * vec3(N.x()+1, N.y()+1, N.z()+1);
+        return 0.5 * vec3(
+                rec.normal.x() + 1,
+                rec.normal.y() + 1,
+                rec.normal.z() + 1
+        );
     }
-
-    unit_direction = unit_vector(r.direction());
-    t = 0.5f * (unit_direction.y() + 1.0);
-    return (1.0f - t) * vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0);
+    else
+    {
+        unit_direction = unit_vector(r.direction());
+        t = 0.5 * (unit_direction.y() + 1.0);
+        return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0);
+    }
 }
 
 
+// Actual rendering entry point
 int main(void)
 {
-    int nx = 200;
-    int ny = 100;
+    int nx = 512;
+    int ny = 256;
+
+    // frame-space co-ordinates?
     vec3 lower_left_corner(-2.0, -1.0, -1.0);
     vec3 horizontal(4.0, 0.0, 0.0);
     vec3 vertical(0.0, 2.0, 0.0);
     vec3 origin(0.0, 0.0, 0.0);
+
+    // hittables 
+    hittable* list[2];
+    hittable* world;
+
+    // generate some spheres
+    list[0] = new sphere(vec3(0, 0, -1), 0.5);
+    list[1] = new sphere(vec3(0, -100.5, -1), 100);
+    world   = new hittable_list(list, 2);
 
     std::cout << "P3\n" << nx << " " << ny << "\n255\n";
 
@@ -66,7 +69,8 @@ int main(void)
             float u = float(i) / float(nx);
             float v = float(j) / float(ny);
             ray r(origin, lower_left_corner + u * horizontal + v * vertical);
-            vec3 col = color(r);
+            //vec3 p   = r.point_at_parameter(2.0);
+            vec3 col = color(r, world);
 
             int ir = int(255.99 * col[0]);
             int ig = int(255.99 * col[1]);
@@ -75,6 +79,10 @@ int main(void)
             std::cout << ir << " " << ig << " " << ib << "\n";
         }
     }
+
+    //delete list[0];
+    //delete list[1];
+    //delete world;
 
     return 0;
 }
