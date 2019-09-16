@@ -179,6 +179,8 @@ vec3& vec3::operator/=(const float t)
     return *this;
 }
 
+// comparison operators
+
 
 // ==== Standalone arithemtic operations ==== //
 
