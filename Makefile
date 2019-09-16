@@ -57,11 +57,24 @@ $(TESTS): $(TEST_OBJECTS) $(OBJECTS)
 	$(CXX) $(LDFLAGS) $(OBJECTS) $(OBJ_DIR)/$@.o\
 		-o $(TEST_BIN_DIR)/$@ $(LIBS) $(TEST_LIBS)
 
+# ==== TOOL TARGETS ==== #
+TOOLS=ppm_writer
+TOOL_OBJECTS  := $(TOOL_SOURCES:$(TOOL_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+
+$(TOOL_OBJECTS) : $(OBJ_DIR)/%.o : $(TOOL_DIR)/%.cpp
+	$(CXX) $(CXXFLAGS) $(INCS) -c $< -o $@
+
+$(TOOLS): $(OBJECTS) $(TOOL_OBJECTS) 
+	$(CXX) $(LDFLAGS) $(OBJECTS) $(OBJ_DIR)/$@.o\
+		-o $(BIN_DIR)/$@ $(LIBS) $(TEST_LIBS)
+
 
 # Main targets 
-all : test 
+all : test tools
 
 test : $(TESTS)
+
+tools : $(TOOLS)
 
 assem : $(ASSEM_OBJECTS)
 
