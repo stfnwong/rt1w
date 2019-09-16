@@ -8,30 +8,39 @@
 #include <iostream>
 #include "ray.hpp"
 
-
-// Simple sphere intersection test
-bool hit_sphere(const vec3& center, float radius, const ray& r)
+// Return normal vector of sphere. Maps normal vectors to the range [-1, 1]
+float hit_sphere(const vec3& center, float radius, const ray& r)
 {
+    float a, b, c, disc;
     vec3 oc = r.origin() - center;
 
-    float a = dot(r.direction(), r.direction());
-    float b = 2.0 * dot(oc, r.direction());
-    float c = dot(oc, oc) - radius * radius;
-    float disc = b * b - 4 * a * c;     // solve quadratic, number of roots = number of intersections
+    a = dot(r.direction(), r.direction());
+    b = 2.0 * dot(oc, r.direction());
+    c = dot(oc, oc) - radius * radius;
+    disc = b * b - 4 * a * c;     // solve quadratic, number of roots = number of intersections
 
-    return (disc > 0) ? true : false;
+    if(disc < 0)
+        return -1.0;
+    else
+        return (-b - sqrt(disc)) / (2.0 * a);
 }
 
 
+// Now adjusted for simple normal visualization
 vec3 color(const ray& r)
 {
     float t;
     vec3 unit_direction;
+    vec3 N;
     // sphere at -1 on z-axis
     vec3 sphere_pos(0.0, 0.0, -1.0);
 
-    if(hit_sphere(sphere_pos, 0.5, r))
-        return vec3(1, 0, 0);           // color sphere red
+    t = hit_sphere(sphere_pos, 0.5, r);
+    if(t > 0.0)
+    {
+        N = unit_vector(r.point_at_parameter(t) - sphere_pos);
+        return 0.5 * vec3(N.x()+1, N.y()+1, N.z()+1);
+    }
 
     unit_direction = unit_vector(r.direction());
     t = 0.5f * (unit_direction.y() + 1.0);
