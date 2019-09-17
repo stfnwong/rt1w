@@ -22,7 +22,7 @@ vec3 color(const ray& r, hittable* world)
     vec3 unit_direction;
     hit_record rec;
 
-    if(world->hit(r, 0.0, MAXFLOAT, rec))
+    if(world->hit(r, 0.0001, MAXFLOAT, rec))
     {
         return 0.5 * vec3(
                 rec.normal.x() + 1,
