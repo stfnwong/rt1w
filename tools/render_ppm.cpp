@@ -5,9 +5,9 @@
  * Stefan Wong 2019
  */
 
-#define MAXFLOAT 200
 
 #include <iostream>
+#include <cfloat>
 #include "sphere.hpp"
 #include "hittable_list.hpp"
 
