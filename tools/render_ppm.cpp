@@ -11,56 +11,11 @@
 #include <cstdlib>
 
 #include "camera.hpp"
+#include "color.hpp"
 #include "sphere.hpp"
 #include "hittable_list.hpp"
 
 // TODO : add arg parser
-
-
-
-// Now adjusted for simple normal visualization
-vec3 normal_color(const ray& r, hittable* world)
-{
-    float t;
-    vec3 unit_direction;
-    hit_record rec;
-
-    if(world->hit(r, 0.0001, MAXFLOAT, rec))
-    {
-        return 0.5 * vec3(
-                rec.normal.x() + 1,
-                rec.normal.y() + 1,
-                rec.normal.z() + 1
-        );
-    }
-    else
-    {
-        unit_direction = unit_vector(r.direction());
-        t = 0.5 * (unit_direction.y() + 1.0);
-        return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0);
-    }
-}
-
-
-vec3 diffuse_color(const ray& r, hittable* world)
-{
-    float t;
-    vec3 target;
-    vec3 unit_direction;
-    hit_record rec;
-
-    if(world->hit(r, 0.0001, MAXFLOAT, rec))
-    {
-        target = rec.p + rec.normal + random_in_unit_sphere();
-        return 0.5 * diffuse_color(ray(rec.p, target - rec.p), world);
-    }
-    else
-    {
-        unit_direction = unit_vector(r.direction());
-        t = 0.5 * (unit_direction.y() + 1.0);
-        return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0);
-    }
-}
 
 
 
@@ -103,7 +58,7 @@ int main(void)
                 float v = float(j + drand48()) / float(ny);
                 ray r = cam.get_ray(u, v);
                 //vec3 p = r.point_at_parameter(2.0);
-                col += diffuse_color(r, world);
+                col += color_diffuse(r, world);
             }
             col /= float(ns);
 

@@ -9,6 +9,7 @@
 #define __RT_SPHERE_HPP
 
 #include "hittable.hpp"
+#include "material.hpp"
 
 
 /*
@@ -20,6 +21,7 @@ class sphere : public hittable
     public:
         vec3 center;
         float radius;
+        material* mat;
 
     public: 
         sphere();
