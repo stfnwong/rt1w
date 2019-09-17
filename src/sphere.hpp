@@ -29,5 +29,8 @@ class sphere : public hittable
         virtual bool hit(const ray& r, float t_min, float t_max, hit_record& rec) const;
 };
 
+// get a random vector that lies within a unit sphere
+vec3 random_in_unit_sphere(void);
+
 
 #endif /*__RT_SPHERE_HPP*/

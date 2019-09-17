@@ -19,7 +19,7 @@
 
 
 // Now adjusted for simple normal visualization
-vec3 color(const ray& r, hittable* world)
+vec3 normal_color(const ray& r, hittable* world)
 {
     float t;
     vec3 unit_direction;
@@ -40,6 +40,28 @@ vec3 color(const ray& r, hittable* world)
         return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0);
     }
 }
+
+
+vec3 diffuse_color(const ray& r, hittable* world)
+{
+    float t;
+    vec3 target;
+    vec3 unit_direction;
+    hit_record rec;
+
+    if(world->hit(r, 0.0001, MAXFLOAT, rec))
+    {
+        target = rec.p + rec.normal + random_in_unit_sphere();
+        return 0.5 * diffuse_color(ray(rec.p, target - rec.p), world);
+    }
+    else
+    {
+        unit_direction = unit_vector(r.direction());
+        t = 0.5 * (unit_direction.y() + 1.0);
+        return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0);
+    }
+}
+
 
 
 // Actual rendering entry point
@@ -73,6 +95,7 @@ int main(void)
     {
         for(int i = 0; i < nx; ++i)
         {
+            // anti-aliasing (blend with some random background pixels)
             vec3 col(0, 0, 0);
             for(int s = 0; s < ns; ++s)
             {
@@ -80,7 +103,7 @@ int main(void)
                 float v = float(j + drand48()) / float(ny);
                 ray r = cam.get_ray(u, v);
                 //vec3 p = r.point_at_parameter(2.0);
-                col += color(r, world);
+                col += diffuse_color(r, world);
             }
             col /= float(ns);
 
@@ -92,9 +115,7 @@ int main(void)
         }
     }
 
-    //delete list[0];
-    //delete list[1];
-    //delete world;
+    // TODO: need to properly manage world memory...
 
     return 0;
 }

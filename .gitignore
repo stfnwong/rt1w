@@ -2,3 +2,5 @@
 *.swp
 # Ignore any *.ppm files 
 *.ppm
+# Ignore *.png files
+*.png
