@@ -40,20 +40,20 @@ int main(void)
     metal* m1;
     metal* m2;
     lambertian* l1;
-    lambertian* l2;
-    m1 = new metal(vec3(0.2, 0.3, 0.3), 0.7);
-    m2 = new metal(vec3(0.1, 0.7, 0.6), 0.4);
+    dielectric* d1;
+    m1 = new metal(vec3(0.6, 0.3, 0.3), 0.7);
+    m2 = new metal(vec3(0.8, 0.8, 0.6), 0.4);
     l1 = new lambertian(vec3(0.6, 0.6, 0.1));
-    l2 = new lambertian(vec3(0.8, 0.8, 0.8));
+    d1 = new dielectric(1.5);
 
     // a camera object
     camera cam;
 
     // generate some spheres
-    list[0] = new sphere(vec3(1, 0, -1), 0.5, m1);
-    list[1] = new sphere(vec3(-1, -0, -1), 0.65, l2);
-    list[2] = new sphere(vec3(1, 1.5, -1), 0.2, m2);
-    list[3] = new sphere(vec3(0, -100.5, -1), 100, m2);
+    list[0] = new sphere(vec3(1, 0, -1), 0.5, l1);
+    list[1] = new sphere(vec3(-1, -0, -1), 0.65, m2);
+    list[2] = new sphere(vec3(1, 1.5, -1), 0.2, d1);
+    list[3] = new sphere(vec3(0, -100.5, -1), 100, m1);
     
     // generate our world of hittable things
     world   = new hittable_list(list, 4);

@@ -55,6 +55,22 @@ class metal : public material
 };
 
 
+/*
+ * dielectric 
+ * Material that splits incoming ray into a reflected ray and 
+ * a refracted ray.
+ */
+class dielectric : public material
+{
+    public:
+        float ref_idx;
+
+    public:
+        dielectric(float ri);
+        virtual bool scatter(const ray& r_in, const hit_record& rec, vec3& atten, ray& scattered) const;
+};
+
+
 
 /*
  * reflect()
@@ -62,6 +78,11 @@ class metal : public material
  */
 vec3 reflect(const vec3& v, const vec3& n);
 
+/*
+ * refract()
+ * Compute Snell's law for refraction. 
+ */
+bool refract(const vec3& v, const vec3& n, float ni_nt, vec3& refracted);
 
 
 #endif /*__RT_MATERIAL_HPP*/

@@ -19,3 +19,6 @@ Several spheres with different material properties
 
 ![Many Spheres](docs/images/many_spheres_material.png)
 
+Some spheres, some with dielectric properties.
+
+![Dielectric Spheres](docs/images/dielectric_spheres.png)
