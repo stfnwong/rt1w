@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <cfloat>
+#include <cmath>
 #include <cstdlib>
 
 #include "camera.hpp"
@@ -47,16 +48,26 @@ int main(void)
     d1 = new dielectric(0.5);
 
     // a camera object
-    camera cam(90, float(nx) / float(ny));
+    camera cam(
+            vec3(-2,-2,1),
+            vec3(0,0,-1),
+            vec3(0,1,0),
+            45, 
+            float(nx) / float(ny)
+    );
+
+    float R = cos(M_PI / 2);
 
     // generate some spheres
-    list[0] = new sphere(vec3(1, 0, -1), 0.5, l1);
-    list[1] = new sphere(vec3(-1, -0, -1), 0.65, m2);
-    list[2] = new sphere(vec3(1, 1.5, -1), 0.2, d1);
-    list[3] = new sphere(vec3(0, -100.5, -1), 100, m1);
+    //list[0] = new sphere(vec3(R, 0, -1), R, l1);
+    //list[1] = new sphere(vec3(-R, -1, -1), R, m2);
+    list[0] = new sphere(vec3(R, 0, -1), 0.1, d1);
+    list[1] = new sphere(vec3(-R, 1, -1), 0.02, m2);
+    list[2] = new sphere(vec3(R * 0.02, 0.2, -1), 0.2, m1);
+    list[3] = new sphere(vec3(0, -200.5, -1), 100, l1);
     
     // generate our world of hittable things
-    world   = new hittable_list(list, 4);
+    world   = new hittable_list(list, 3);
 
     std::cout << "P3\n" << nx << " " << ny << "\n255\n";
 
