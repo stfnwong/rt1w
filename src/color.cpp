@@ -5,9 +5,15 @@
  * Stefan Wong 2019
  */
 
+#define MAX_RECURSE_DEPTH 50
+
 #include "color.hpp"
 #include "sphere.hpp"
 
+
+/*
+ * color_normal()
+ */
 vec3 color_normal(const ray& r, hittable* world)
 {
     float t;
@@ -31,6 +37,9 @@ vec3 color_normal(const ray& r, hittable* world)
 }
 
 
+/*
+ * color_diffuse()
+ */
 vec3 color_diffuse(const ray& r, hittable* world)
 {
     float t;
@@ -52,3 +61,29 @@ vec3 color_diffuse(const ray& r, hittable* world)
 }
 
 
+/*
+ * color_metal()
+ */
+vec3 color_metal(const ray& r, hittable* world, int depth)
+{
+    float t;
+    vec3 target;
+    vec3 atten;
+    vec3 unit_direction;
+    ray scattered;
+    hit_record rec;
+
+    if(world->hit(r, 000.1, MAXFLOAT, rec))
+    {
+        if((depth < 50) && (rec.mat->scatter(r, rec, atten, scattered)))
+            return atten * color_metal(scattered, world, depth+1);
+        else
+            return vec3(0, 0, 0);
+    }
+    else
+    {
+        unit_direction = unit_vector(r.direction());
+        t = 0.5 * (unit_direction.y() + 1.0);
+        return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0);
+    }
+}

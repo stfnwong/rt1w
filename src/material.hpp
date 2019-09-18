@@ -19,6 +19,7 @@
 class material
 {
     public:
+        virtual ~material() {}
         virtual bool scatter(const ray& r_in, const hit_record& rec, vec3& atten, ray& scattered) const = 0;
 };
 
@@ -36,6 +37,29 @@ class lambertian : public material
         lambertian(const vec3& a);
         virtual bool scatter(const ray& r_in, const hit_record& rec, vec3& atten, ray& scattered) const;
 };
+
+
+/*
+ * metal
+ * A reflective material
+ */
+class metal : public material
+{
+    public:
+        vec3 albedo;
+
+    public:
+        metal(const vec3& a);
+        virtual bool scatter(const ray& r_in, const hit_record& rec, vec3& atten, ray& scattered) const;
+};
+
+
+
+/*
+ * reflect()
+ * Reflect a ray
+ */
+vec3 reflect(const vec3& v, const vec3& n);
 
 
 

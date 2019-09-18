@@ -27,6 +27,7 @@ struct hit_record
 class hittable
 {
     public:
+        virtual ~hittable() {} 
         // check if a ray between t_mix < t < t_max hit something
         virtual bool hit(const ray& r, float t_min, float t_max, hit_record& rec) const = 0;
 };

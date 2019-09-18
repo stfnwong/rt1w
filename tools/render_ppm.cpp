@@ -13,6 +13,7 @@
 #include "camera.hpp"
 #include "color.hpp"
 #include "sphere.hpp"
+#include "material.hpp"
 #include "hittable_list.hpp"
 
 // TODO : add arg parser
@@ -35,13 +36,21 @@ int main(void)
     // hittables 
     hittable* list[2];
     hittable* world;
+    // materials
+    metal* m1;
+    metal* m2;
+    m1 = new metal(vec3(0.8, 0.3, 0.3));
+    m2 = new metal(vec3(0.8, 0.8, 0.8));
 
     // a camera object
     camera cam;
 
     // generate some spheres
-    list[0] = new sphere(vec3(0, 0, -1), 0.5);
-    list[1] = new sphere(vec3(0, -100.5, -1), 100);
+    list[0] = new sphere(vec3(0, 0, -1), 0.5, m1);
+    list[1] = new sphere(vec3(0, -100.5, -1), 100, m2);
+
+    
+    // generate our world of hittable things
     world   = new hittable_list(list, 2);
 
     std::cout << "P3\n" << nx << " " << ny << "\n255\n";
@@ -58,7 +67,7 @@ int main(void)
                 float v = float(j + drand48()) / float(ny);
                 ray r = cam.get_ray(u, v);
                 //vec3 p = r.point_at_parameter(2.0);
-                col += color_diffuse(r, world);
+                col += color_metal(r, world, 0);
             }
             col /= float(ns);
 

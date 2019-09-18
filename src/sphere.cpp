@@ -9,7 +9,13 @@
 #include "sphere.hpp"
 
 
-sphere::sphere(vec3 cen, float r) : center(cen), radius(r) {} 
+sphere::sphere(vec3 cen, float r, material* m) : center(cen), radius(r), mat(m) {}
+
+// TODO: destructor to clean up this->mat reference?
+sphere::~sphere()
+{
+    delete this->mat;
+}
 
 /*
  * hit()
@@ -36,6 +42,7 @@ bool sphere::hit(const ray& r, float t_min, float t_max, hit_record& rec) const
             rec.t = temp;
             rec.p = r.point_at_parameter(rec.t);
             rec.normal = (rec.p - center) / radius;
+            rec.mat = this->mat;
             return true;
         }
         // check postive sign root
@@ -45,6 +52,7 @@ bool sphere::hit(const ray& r, float t_min, float t_max, hit_record& rec) const
             rec.t = temp;
             rec.p = r.point_at_parameter(rec.t);
             rec.normal = (rec.p - center) / radius;
+            rec.mat = this->mat;
             return true;
         }
     }

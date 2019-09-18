@@ -16,5 +16,7 @@ vec3 color_normal(const ray& r, hittable* world);
 
 vec3 color_diffuse(const ray& r, hittable* world);
 
+vec3 color_metal(const ray& t, hittable* world, int depth);
+
 
 #endif /*__RT_COLOR_HPP*/
