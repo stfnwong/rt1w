@@ -41,8 +41,8 @@ int main(void)
     metal* m2;
     lambertian* l1;
     lambertian* l2;
-    m1 = new metal(vec3(0.2, 0.3, 0.3));
-    m2 = new metal(vec3(0.1, 0.2, 0.2));
+    m1 = new metal(vec3(0.2, 0.3, 0.3), 0.7);
+    m2 = new metal(vec3(0.1, 0.7, 0.6), 0.4);
     l1 = new lambertian(vec3(0.6, 0.6, 0.1));
     l2 = new lambertian(vec3(0.8, 0.8, 0.8));
 
@@ -56,7 +56,7 @@ int main(void)
     list[3] = new sphere(vec3(0, -100.5, -1), 100, m2);
     
     // generate our world of hittable things
-    world   = new hittable_list(list, 2);
+    world   = new hittable_list(list, 4);
 
     std::cout << "P3\n" << nx << " " << ny << "\n255\n";
 

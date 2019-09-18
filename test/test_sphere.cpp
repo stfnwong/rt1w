@@ -34,7 +34,7 @@ TEST_F(TestSphere, test_sphere_init)
     float r = 2.1;
 
     vec3 metal_albedo(0.8, 0.2, 0.3);
-    mat = new metal(metal_albedo);
+    mat = new metal(metal_albedo, 0.5);
     sphere_obj = new sphere(center, r, mat);
 
     EXPECT_TRUE(sphere_obj->mat);        

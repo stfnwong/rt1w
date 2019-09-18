@@ -47,9 +47,10 @@ class metal : public material
 {
     public:
         vec3 albedo;
+        float fuzz;
 
     public:
-        metal(const vec3& a);
+        metal(const vec3& a, float f);
         virtual bool scatter(const ray& r_in, const hit_record& rec, vec3& atten, ray& scattered) const;
 };
 
