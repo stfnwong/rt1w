@@ -17,5 +17,5 @@ Sphere with metallic reflection
 
 Several spheres with different material properties
 
-![Many Spheres](docs/images/many_spheres_material.png]
+![Many Spheres](docs/images/many_spheres_material.png)
 
