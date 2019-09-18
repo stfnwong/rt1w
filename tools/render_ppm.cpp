@@ -41,13 +41,13 @@ int main(void)
     metal* m2;
     lambertian* l1;
     dielectric* d1;
-    m1 = new metal(vec3(0.6, 0.3, 0.3), 0.7);
-    m2 = new metal(vec3(0.8, 0.8, 0.6), 0.4);
-    l1 = new lambertian(vec3(0.6, 0.6, 0.1));
-    d1 = new dielectric(1.5);
+    m1 = new metal(vec3(0.7, 0.7, 0.6), 0.4);
+    m2 = new metal(vec3(0.8, 0.7, 0.65), 0.1);
+    l1 = new lambertian(vec3(0.6, 0.65, 0.4));
+    d1 = new dielectric(0.5);
 
     // a camera object
-    camera cam;
+    camera cam(90, float(nx) / float(ny));
 
     // generate some spheres
     list[0] = new sphere(vec3(1, 0, -1), 0.5, l1);

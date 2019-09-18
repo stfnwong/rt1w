@@ -23,7 +23,7 @@ class camera
         vec3 vertical;
 
     public:
-        camera();
+        camera(float vfov, float aspect);
         ray get_ray(float u, float v);
 };
 
