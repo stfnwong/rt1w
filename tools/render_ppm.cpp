@@ -39,16 +39,21 @@ int main(void)
     // materials
     metal* m1;
     metal* m2;
-    m1 = new metal(vec3(0.8, 0.3, 0.3));
-    m2 = new metal(vec3(0.8, 0.8, 0.8));
+    lambertian* l1;
+    lambertian* l2;
+    m1 = new metal(vec3(0.2, 0.3, 0.3));
+    m2 = new metal(vec3(0.1, 0.2, 0.2));
+    l1 = new lambertian(vec3(0.6, 0.6, 0.1));
+    l2 = new lambertian(vec3(0.8, 0.8, 0.8));
 
     // a camera object
     camera cam;
 
     // generate some spheres
-    list[0] = new sphere(vec3(0, 0, -1), 0.5, m1);
-    list[1] = new sphere(vec3(0, -100.5, -1), 100, m2);
-
+    list[0] = new sphere(vec3(1, 0, -1), 0.5, m1);
+    list[1] = new sphere(vec3(-1, -0, -1), 0.65, l2);
+    list[2] = new sphere(vec3(1, 1.5, -1), 0.2, m2);
+    list[3] = new sphere(vec3(0, -100.5, -1), 100, m2);
     
     // generate our world of hittable things
     world   = new hittable_list(list, 2);
