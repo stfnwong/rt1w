@@ -49,12 +49,13 @@ int main(void)
 
     // camera params 
     vec3 cam_lookfrom(-2, -2, 1);
-    vec3 cam_lookat(0, 0, -1);
+    vec3 cam_lookat(0, 0, 0);
     vec3 cam_vup(0, 1, 0);
-    float cam_vfov = 60.0f;
+    float cam_vfov = 90.0f;
     float cam_aspect = float(nx) / float(ny);
-    float cam_aperture = 2.0;
-    float cam_focus_dist = (cam_lookfrom - cam_lookat).length();
+    float cam_aperture = 0.1;
+    float cam_focus_dist = 10.0;
+    //float cam_focus_dist = (cam_lookfrom - cam_lookat).length();
 
     // a camera object
     Camera cam(
@@ -72,9 +73,9 @@ int main(void)
     // generate some spheres
     //list[0] = new sphere(vec3(R, 0, -1), R, l1);
     //list[1] = new sphere(vec3(-R, -1, -1), R, m2);
-    list[0] = new Sphere(vec3(R, 0, -1), 0.1, d1);
-    list[1] = new Sphere(vec3(-R, 1, -1), 0.02, m2);
-    list[2] = new Sphere(vec3(R * 0.02, 0.2, -1), 0.2, m1);
+    list[0] = new Sphere(vec3(1, 0, -1), 0.1, d1);
+    list[1] = new Sphere(vec3(-1, 0, -1), 0.02, m2);
+    list[2] = new Sphere(vec3(1, 1.5, -1), 0.2, m1);
     list[3] = new Sphere(vec3(0, -200.5, -1), 100, l1);
     
     // generate our world of Hittable things
