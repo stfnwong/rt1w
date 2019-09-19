@@ -106,7 +106,7 @@ int main(void)
         }
     }
 
-    // TODO: need to properly manage world memory...
+    delete world;
 
     return 0;
 }

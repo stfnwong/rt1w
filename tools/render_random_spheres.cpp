@@ -104,15 +104,6 @@ int main(void)
 
     // Hittables 
     Hittable* world;
-    // materials
-    Metal* m1;
-    Metal* m2;
-    Lambertian* l1;
-    Dielectric* d1;
-    m1 = new Metal(vec3(0.7, 0.7, 0.6), 0.4);
-    m2 = new Metal(vec3(0.8, 0.7, 0.65), 0.1);
-    l1 = new Lambertian(vec3(0.6, 0.65, 0.4));
-    d1 = new Dielectric(0.5);
 
     // Camera params 
     vec3 cam_lookfrom(-2, -2, 1);
@@ -133,8 +124,6 @@ int main(void)
             cam_aperture,
             cam_focus_dist
     );
-
-    float R = cos(M_PI / 2);
 
     // generate our world of Hittable things
     world = random_scene(500);

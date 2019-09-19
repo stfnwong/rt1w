@@ -17,7 +17,8 @@ HittableList::HittableList(Hittable** l, int n)
 
 HittableList::~HittableList()
 {
-    delete this->list;
+    for(int i = 0; i < this->list_size; ++i)
+        delete this->list[i];
 }
 
 bool HittableList::hit(const Ray& r, float t_min, float t_max, hit_record& rec) const
