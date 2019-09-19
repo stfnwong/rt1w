@@ -47,13 +47,24 @@ int main(void)
     l1 = new lambertian(vec3(0.6, 0.65, 0.4));
     d1 = new dielectric(0.5);
 
+    // camera params 
+    vec3 cam_lookfrom(-2, -2, 1);
+    vec3 cam_lookat(0, 0, -1);
+    vec3 cam_vup(0, 1, 0);
+    float cam_vfov = 60.0f;
+    float cam_aspect = float(nx) / float(ny);
+    float cam_aperture = 2.0;
+    float cam_focus_dist = (cam_lookfrom - cam_lookat).length();
+
     // a camera object
     camera cam(
-            vec3(-2,-2,1),
-            vec3(0,0,-1),
-            vec3(0,1,0),
-            45, 
-            float(nx) / float(ny)
+            cam_lookfrom,
+            cam_lookat,
+            cam_vup,
+            cam_vfov,
+            cam_aspect,
+            cam_aperture,
+            cam_focus_dist
     );
 
     float R = cos(M_PI / 2);

@@ -8,10 +8,23 @@
 #include <cmath>
 #include "camera.hpp"
 
-
-camera::camera(vec3 lookfrom, vec3 lookat, vec3 vup, float vfov, float aspect)
+vec3 random_in_unit_disk(void)
 {
-    vec3 u, v, w;
+    vec3 p;
+    
+    do
+    {
+        p = 2.0 * vec3(drand48(), drand48(), 0.0) - vec3(1,1,0);
+    }while (dot(p,p) >= 1.0);
+
+    return p;
+}
+
+/*
+ * camera ctor
+ */
+camera::camera(vec3 lookfrom, vec3 lookat, vec3 vup, float vfov, float aspect, float aperture, float focus_dist)
+{
     float theta;
     float half_height;
     float half_width;
@@ -20,29 +33,37 @@ camera::camera(vec3 lookfrom, vec3 lookat, vec3 vup, float vfov, float aspect)
     half_height = tan(theta / 2);
     half_width  = aspect * half_height;
 
-    w = unit_vector(lookfrom - lookat);
-    u = unit_vector(cross(vup, w));
-    v = cross(w, u);
+    this->lens_radius = aperture / 2;
 
-    this->lower_left_corner = vec3(-half_width, -half_height, -1.0);
+    this->w = unit_vector(lookfrom - lookat);
+    this->u = unit_vector(cross(vup, this->w));
+    this->v = cross(this->w, this->u);
+
     this->lower_left_corner = 
         this->origin - 
-        half_width * u - 
-        half_height * v - 
-        w;
-    this->horizontal = 2 * half_width * u;
-    this->vertical   = 2 * half_height * v;
+        half_width * focus_dist * this->u - 
+        half_height * focus_dist * this->v - 
+        focus_dist * this->w;
+    this->horizontal = 2 * half_width * focus_dist * this->u;
+    this->vertical   = 2 * half_height * focus_dist * this->v;
     this->origin     = lookfrom;
 }
 
 ray camera::get_ray(float u, float v)
 {
+    vec3 rd;
+    vec3 offset;
+
+    rd = this->lens_radius * random_in_unit_disk();
+    offset = this->u * rd.x() + this->v * rd.y();
+
     return ray(
-            this->origin,
+            this->origin + offset,
             this->lower_left_corner + 
             u * this->horizontal +
             v * this->vertical -
-            this->origin
+            this->origin -
+            offset
     );
 }
 

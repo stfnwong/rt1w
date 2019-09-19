@@ -10,6 +10,7 @@
 
 #include "ray.hpp"
 
+vec3 random_in_unit_disk(void);
 
 /*
  * Camera
@@ -21,9 +22,15 @@ class camera
         vec3 lower_left_corner;
         vec3 horizontal;
         vec3 vertical;
+        vec3 u;
+        vec3 v;
+        vec3 w;
+        
+        // lens stuff
+        float lens_radius;
 
     public:
-        camera(vec3 lookfrom, vec3 lookat, vec3 vup, float vfov, float aspect);
+        camera(vec3 lookfrom, vec3 lookat, vec3 vup, float vfov, float aspect, float aperture, float focus_dist);
         ray get_ray(float u, float v);
 };
 
