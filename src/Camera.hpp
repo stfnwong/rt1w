@@ -1,6 +1,6 @@
 /*
  * CAMERA
- * A simple camera object
+ * A simple Camera object
  *
  * Stefan Wong 2019
  */
@@ -8,14 +8,14 @@
 #ifndef __RT_CAMERA_HPP
 #define __RT_CAMERA_HPP
 
-#include "ray.hpp"
+#include "Ray.hpp"
 
 vec3 random_in_unit_disk(void);
 
 /*
  * Camera
  */
-class camera
+class Camera
 {
     public:
         vec3 origin;
@@ -30,8 +30,8 @@ class camera
         float lens_radius;
 
     public:
-        camera(vec3 lookfrom, vec3 lookat, vec3 vup, float vfov, float aspect, float aperture, float focus_dist);
-        ray get_ray(float u, float v);
+        Camera(vec3 lookfrom, vec3 lookat, vec3 vup, float vfov, float aspect, float aperture, float focus_dist);
+        Ray get_ray(float u, float v);
 };
 
 

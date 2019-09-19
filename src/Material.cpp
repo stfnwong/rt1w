@@ -5,25 +5,25 @@
  */
 
 #include <cmath>
-#include "material.hpp"
-#include "sphere.hpp"
+#include "Material.hpp"
+#include "Sphere.hpp"
 
 
 /*
- * lambertian::lambertian
+ * Lambertian::Lambertian
  * Lambertian constructor
  */
-lambertian::lambertian(const vec3& a) : albedo(a) {}
+Lambertian::Lambertian(const vec3& a) : albedo(a) {}
 
 /*
- * lambertian::scatter()
+ * Lambertian::scatter()
  */
-bool lambertian::scatter(const ray& r_in, const hit_record& rec, vec3& atten, ray& scattered) const
+bool Lambertian::scatter(const Ray& r_in, const hit_record& rec, vec3& atten, Ray& scattered) const
 {
     vec3 target;
 
     target = rec.p + rec.normal + random_in_unit_sphere();
-    scattered = ray(rec.p, target - rec.p);
+    scattered = Ray(rec.p, target - rec.p);
     atten = this->albedo;
 
     return true;
@@ -31,10 +31,10 @@ bool lambertian::scatter(const ray& r_in, const hit_record& rec, vec3& atten, ra
 
 
 /*
- * metal::metal
+ * Metal::Metal
  * Metal constructor
  */
-metal::metal(const vec3& a, float f) : albedo(a)
+Metal::Metal(const vec3& a, float f) : albedo(a)
 {
     if(f < 1)
         this->fuzz = f;
@@ -43,14 +43,14 @@ metal::metal(const vec3& a, float f) : albedo(a)
 }
 
 /*
- * metal::scatter()
+ * Metal::scatter()
  */
-bool metal::scatter(const ray& r_in, const hit_record& rec, vec3& atten, ray& scattered) const
+bool Metal::scatter(const Ray& r_in, const hit_record& rec, vec3& atten, Ray& scattered) const
 {
     vec3 reflected;
 
     reflected = reflect(unit_vector(r_in.direction()), rec.normal);
-    scattered = ray(rec.p, reflected + this->fuzz * random_in_unit_sphere());
+    scattered = Ray(rec.p, reflected + this->fuzz * random_in_unit_sphere());
     atten = this->albedo;
 
     return (dot(scattered.direction(), rec.normal) > 0) ? true : false;
@@ -58,9 +58,9 @@ bool metal::scatter(const ray& r_in, const hit_record& rec, vec3& atten, ray& sc
 
 
 /*
- * dielectric::scatter()
+ * Dielectric::scatter()
  */
-bool dielectric::scatter(const ray& r_in, const hit_record& rec, vec3& atten, ray& scattered) const
+bool Dielectric::scatter(const Ray& r_in, const hit_record& rec, vec3& atten, Ray& scattered) const
 {
     vec3 outward_normal;
     vec3 reflected;
@@ -82,10 +82,10 @@ bool dielectric::scatter(const ray& r_in, const hit_record& rec, vec3& atten, ra
     }
     
     if(refract(r_in.direction(), outward_normal, ni_nt, refracted))
-        scattered = ray(rec.p, refracted);
+        scattered = Ray(rec.p, refracted);
     else
     {
-        scattered = ray(rec.p, reflected);
+        scattered = Ray(rec.p, reflected);
         return true;
     }
     
@@ -94,10 +94,10 @@ bool dielectric::scatter(const ray& r_in, const hit_record& rec, vec3& atten, ra
 
 
 /*
- * dielectric::dielectric
+ * Dielectric::Dielectric
  * Dielectric constructor
  */
-dielectric::dielectric(float ri) : ref_idx(ri) {}
+Dielectric::Dielectric(float ri) : ref_idx(ri) {}
 
 
 

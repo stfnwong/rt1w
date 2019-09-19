@@ -14,7 +14,7 @@
 
 // unit(s) under test
 #include "vec3.hpp"
-#include "ray.hpp"
+#include "Ray.hpp"
 
 class TestRay : public ::testing::Test
 {
@@ -25,7 +25,7 @@ class TestRay : public ::testing::Test
 
 TEST_F(TestRay, test_ray_init)
 {
-    ray test_ray;
+    Ray test_ray;
 
     EXPECT_FLOAT_EQ(0.0, test_ray.A[0]);
     EXPECT_FLOAT_EQ(0.0, test_ray.A[1]);

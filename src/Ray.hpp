@@ -11,17 +11,17 @@
 #include "vec3.hpp"
 
 /*
- * ray
+ * Ray
  * Ray structure
  */
-struct ray
+struct Ray
 {
     vec3 A;
     vec3 B;
 
     public:
-        ray();
-        ray(const vec3& a, const vec3& b);
+        Ray();
+        Ray(const vec3& a, const vec3& b);
         
         vec3 origin(void) const;
         vec3 direction(void) const;

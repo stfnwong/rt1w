@@ -5,12 +5,12 @@
  * Stefan Wong 2019
  */
 
-#include "ray.hpp"
+#include "Ray.hpp"
 
 
-ray::ray() : A(0.0, 0.0, 0.0), B(0.0, 0.0, 0.0) {} 
+Ray::Ray() : A(0.0, 0.0, 0.0), B(0.0, 0.0, 0.0) {} 
 
-ray::ray(const vec3& a, const vec3& b)
+Ray::Ray(const vec3& a, const vec3& b)
 {
     this->A = a;
     this->B = b;
@@ -20,7 +20,7 @@ ray::ray(const vec3& a, const vec3& b)
 /*
  * origin()
  */
-vec3 ray::origin(void) const
+vec3 Ray::origin(void) const
 {
     return this->A;
 }
@@ -28,7 +28,7 @@ vec3 ray::origin(void) const
 /*
  * direction()
  */
-vec3 ray::direction(void) const
+vec3 Ray::direction(void) const
 {
     return this->B;
 }
@@ -36,7 +36,7 @@ vec3 ray::direction(void) const
 /*
  * point_at_parameter()
  */
-vec3 ray::point_at_parameter(float t) const
+vec3 Ray::point_at_parameter(float t) const
 {
     return this->A + t * this->B;
 }

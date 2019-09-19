@@ -11,11 +11,11 @@
 #include <cmath>
 #include <cstdlib>
 
-#include "camera.hpp"
-#include "color.hpp"
-#include "sphere.hpp"
-#include "material.hpp"
-#include "hittable_list.hpp"
+#include "Camera.hpp"
+#include "Color.hpp"
+#include "Sphere.hpp"
+#include "Material.hpp"
+#include "HittableList.hpp"
 
 // TODO : add arg parser
 
@@ -34,18 +34,18 @@ int main(void)
     vec3 vertical(0.0, 2.0, 0.0);
     vec3 origin(0.0, 0.0, 0.0);
 
-    // hittables 
-    hittable* list[2];
-    hittable* world;
+    // Hittables 
+    Hittable* list[2];
+    Hittable* world;
     // materials
-    metal* m1;
-    metal* m2;
-    lambertian* l1;
-    dielectric* d1;
-    m1 = new metal(vec3(0.7, 0.7, 0.6), 0.4);
-    m2 = new metal(vec3(0.8, 0.7, 0.65), 0.1);
-    l1 = new lambertian(vec3(0.6, 0.65, 0.4));
-    d1 = new dielectric(0.5);
+    Metal* m1;
+    Metal* m2;
+    Lambertian* l1;
+    Dielectric* d1;
+    m1 = new Metal(vec3(0.7, 0.7, 0.6), 0.4);
+    m2 = new Metal(vec3(0.8, 0.7, 0.65), 0.1);
+    l1 = new Lambertian(vec3(0.6, 0.65, 0.4));
+    d1 = new Dielectric(0.5);
 
     // camera params 
     vec3 cam_lookfrom(-2, -2, 1);
@@ -57,7 +57,7 @@ int main(void)
     float cam_focus_dist = (cam_lookfrom - cam_lookat).length();
 
     // a camera object
-    camera cam(
+    Camera cam(
             cam_lookfrom,
             cam_lookat,
             cam_vup,
@@ -72,13 +72,13 @@ int main(void)
     // generate some spheres
     //list[0] = new sphere(vec3(R, 0, -1), R, l1);
     //list[1] = new sphere(vec3(-R, -1, -1), R, m2);
-    list[0] = new sphere(vec3(R, 0, -1), 0.1, d1);
-    list[1] = new sphere(vec3(-R, 1, -1), 0.02, m2);
-    list[2] = new sphere(vec3(R * 0.02, 0.2, -1), 0.2, m1);
-    list[3] = new sphere(vec3(0, -200.5, -1), 100, l1);
+    list[0] = new Sphere(vec3(R, 0, -1), 0.1, d1);
+    list[1] = new Sphere(vec3(-R, 1, -1), 0.02, m2);
+    list[2] = new Sphere(vec3(R * 0.02, 0.2, -1), 0.2, m1);
+    list[3] = new Sphere(vec3(0, -200.5, -1), 100, l1);
     
-    // generate our world of hittable things
-    world   = new hittable_list(list, 3);
+    // generate our world of Hittable things
+    world   = new HittableList(list, 3);
 
     std::cout << "P3\n" << nx << " " << ny << "\n255\n";
 
@@ -92,7 +92,7 @@ int main(void)
             {
                 float u = float(i + drand48()) / float(nx);
                 float v = float(j + drand48()) / float(ny);
-                ray r = cam.get_ray(u, v);
+                Ray r = cam.get_ray(u, v);
                 //vec3 p = r.point_at_parameter(2.0);
                 col += color_metal(r, world, 0);
             }

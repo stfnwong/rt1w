@@ -7,14 +7,14 @@
 
 #define MAX_RECURSE_DEPTH 50
 
-#include "color.hpp"
-#include "sphere.hpp"
+#include "Color.hpp"
+#include "Sphere.hpp"
 
 
 /*
  * color_normal()
  */
-vec3 color_normal(const ray& r, hittable* world)
+vec3 color_normal(const Ray& r, Hittable* world)
 {
     float t;
     vec3 unit_direction;
@@ -40,7 +40,7 @@ vec3 color_normal(const ray& r, hittable* world)
 /*
  * color_diffuse()
  */
-vec3 color_diffuse(const ray& r, hittable* world)
+vec3 color_diffuse(const Ray& r, Hittable* world)
 {
     float t;
     vec3 target;
@@ -50,7 +50,7 @@ vec3 color_diffuse(const ray& r, hittable* world)
     if(world->hit(r, 0.0001, MAXFLOAT, rec))
     {
         target = rec.p + rec.normal + random_in_unit_sphere();
-        return 0.5 * color_diffuse(ray(rec.p, target - rec.p), world);
+        return 0.5 * color_diffuse(Ray(rec.p, target - rec.p), world);
     }
     else
     {
@@ -64,13 +64,13 @@ vec3 color_diffuse(const ray& r, hittable* world)
 /*
  * color_metal()
  */
-vec3 color_metal(const ray& r, hittable* world, int depth)
+vec3 color_metal(const Ray& r, Hittable* world, int depth)
 {
     float t;
     vec3 target;
     vec3 atten;
     vec3 unit_direction;
-    ray scattered;
+    Ray scattered;
     hit_record rec;
 
     if(world->hit(r, 000.1, MAXFLOAT, rec))

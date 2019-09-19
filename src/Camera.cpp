@@ -1,12 +1,12 @@
 /*
  * CAMERA
- * A simple camera object
+ * A simple Camera object
  *
  * Stefan Wong 2019
  */
 
 #include <cmath>
-#include "camera.hpp"
+#include "Camera.hpp"
 
 vec3 random_in_unit_disk(void)
 {
@@ -21,9 +21,9 @@ vec3 random_in_unit_disk(void)
 }
 
 /*
- * camera ctor
+ * Camera ctor
  */
-camera::camera(vec3 lookfrom, vec3 lookat, vec3 vup, float vfov, float aspect, float aperture, float focus_dist)
+Camera::Camera(vec3 lookfrom, vec3 lookat, vec3 vup, float vfov, float aspect, float aperture, float focus_dist)
 {
     float theta;
     float half_height;
@@ -49,7 +49,7 @@ camera::camera(vec3 lookfrom, vec3 lookat, vec3 vup, float vfov, float aspect, f
     this->origin     = lookfrom;
 }
 
-ray camera::get_ray(float u, float v)
+Ray Camera::get_ray(float u, float v)
 {
     vec3 rd;
     vec3 offset;
@@ -57,7 +57,7 @@ ray camera::get_ray(float u, float v)
     rd = this->lens_radius * random_in_unit_disk();
     offset = this->u * rd.x() + this->v * rd.y();
 
-    return ray(
+    return Ray(
             this->origin + offset,
             this->lower_left_corner + 
             u * this->horizontal +
