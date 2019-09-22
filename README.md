@@ -22,3 +22,7 @@ Several spheres with different material properties
 Some spheres, some with dielectric properties.
 
 ![Dielectric Spheres](docs/images/dielectric_spheres.png)
+
+Camera focus and position
+
+![Camera Focus](docs/images/camera_focus.png)
