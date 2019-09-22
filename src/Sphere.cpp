@@ -1,18 +1,39 @@
 /*
  * SPHERE
- * Definition of a sphere in terms of a hittable
+ * Definition of a Sphere in terms of a hittable
  *
  * Stefan Wong 2019
  */
 
 #include <cstdlib>
-#include "sphere.hpp"
+#include "Sphere.hpp"
 
 
-sphere::sphere(vec3 cen, float r, material* m) : center(cen), radius(r), mat(m) {}
+/*
+ * random_in_unit_Sphere()
+ */
+vec3 random_in_unit_sphere(void)
+{
+    vec3 p;
+    
+    do{
+        p = 2.0 * vec3(drand48(), drand48(), drand48()) - vec3(1,1,1);
+    } while(p.squared_length() >= 1.0);
+    
+    return p;
+}
 
-// TODO: destructor to clean up this->mat reference?
-sphere::~sphere()
+
+/*
+ * Sphere ctor
+ */
+Sphere::Sphere(vec3 cen, float r, Material* m) : center(cen), radius(r), mat(m) {}
+
+
+/*
+ * Sphere dtor
+ */
+Sphere::~Sphere()
 {
     delete this->mat;
 }
@@ -20,7 +41,7 @@ sphere::~sphere()
 /*
  * hit()
  */
-bool sphere::hit(const ray& r, float t_min, float t_max, hit_record& rec) const
+bool Sphere::hit(const Ray& r, float t_min, float t_max, hit_record& rec) const
 {
     vec3 oc;
     float a, b, c, disc;
@@ -58,19 +79,4 @@ bool sphere::hit(const ray& r, float t_min, float t_max, hit_record& rec) const
     }
 
     return false;
-}
-
-
-/*
- * random_in_unit_sphere()
- */
-vec3 random_in_unit_sphere(void)
-{
-    vec3 p;
-    
-    do{
-        p = 2.0 * vec3(drand48(), drand48(), drand48()) - vec3(1,1,1);
-    } while(p.squared_length() >= 1.0);
-    
-    return p;
 }

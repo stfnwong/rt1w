@@ -1,26 +1,27 @@
 /*
  * HITTABLE_LIST
- * A list of hittable things
+ * A list of Hittable things
  *
  * Stefan Wong 2019
  */
 
-#include "hittable_list.hpp"
+#include "HittableList.hpp"
 
-hittable_list::hittable_list() {} 
+HittableList::HittableList() {} 
 
-hittable_list::hittable_list(hittable** l, int n)
+HittableList::HittableList(Hittable** l, int n)
 {
     this->list = l;
     this->list_size = n;
 }
 
-hittable_list::~hittable_list()
+HittableList::~HittableList()
 {
-    delete this->list;
+    for(int i = 0; i < this->list_size; ++i)
+        delete this->list[i];
 }
 
-bool hittable_list::hit(const ray& r, float t_min, float t_max, hit_record& rec) const
+bool HittableList::hit(const Ray& r, float t_min, float t_max, hit_record& rec) const
 {
     hit_record temp_rec;
     bool hit_anything;

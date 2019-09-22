@@ -58,7 +58,7 @@ $(TESTS): $(TEST_OBJECTS) $(OBJECTS)
 		-o $(TEST_BIN_DIR)/$@ $(LIBS) $(TEST_LIBS)
 
 # ==== TOOL TARGETS ==== #
-TOOLS=ppm_example render_ppm
+TOOLS=ppm_example render_ppm render_random_spheres
 TOOL_OBJECTS  := $(TOOL_SOURCES:$(TOOL_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 $(TOOL_OBJECTS) : $(OBJ_DIR)/%.o : $(TOOL_DIR)/%.cpp
