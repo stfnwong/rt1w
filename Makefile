@@ -18,7 +18,8 @@ CXXFLAGS=-Wall -g2 -std=c++14 -D_REENTRANT $(OPT)
 TESTFLAGS=-lgtest -lgtest_main
 LDFLAGS=
 LIBS = 
-TEST_LIBS = -lgtest -lgtest_main
+TEST_LIBS = 
+#TEST_LIBS = -lgtest -lgtest_main
 
 # style for assembly output
 ASM_STYLE=intel
@@ -52,7 +53,8 @@ $(TEST_OBJECTS): $(OBJ_DIR)/%.o : $(TEST_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) $(INCS) -c $< -o $@ 
 
 # ==== TEST TARGETS ==== #
-TESTS=test_vec3 test_ray test_sphere
+#TESTS=test_vec3 test_ray test_sphere
+TESTS=test_ray
 $(TESTS): $(TEST_OBJECTS) $(OBJECTS)
 	$(CXX) $(LDFLAGS) $(OBJECTS) $(OBJ_DIR)/$@.o\
 		-o $(TEST_BIN_DIR)/$@ $(LIBS) $(TEST_LIBS)
