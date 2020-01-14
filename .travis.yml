@@ -2,20 +2,33 @@
 # 
 # Stefan Wong 2020
 
-dist: trusty
+dist: bionic
 sudo: false
 language: cpp
 
-# TODO : matrix?
 compiler: 
     - clang
     - gcc
 
+matrix:
+    include:
+        os: linux
+        addons:
+            apt:
+                sources:
+                    ubuntu-toolchain-r-test
+                packages:
+                    - g++-6
+        env:
+            MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
 
 before_install:
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get -q update
-  - sudo apt-get -y install gcc-6.0
+    eval "${MATRIX_EVAL}"
+
+#before_install:
+#  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+#  - sudo apt-get -q update
+#  - sudo apt-get -y install gcc-6.0
 
 
 script:
