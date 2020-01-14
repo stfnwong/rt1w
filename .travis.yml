@@ -1,0 +1,25 @@
+# RT1W CI CONFIG
+# 
+# Stefan Wong 2020
+
+dist: trusty
+sudo: false
+language: cpp
+
+# TODO : matrix?
+compiler: 
+    - clang
+    - gcc
+
+addons:
+    apt:
+        sources:
+            -ubuntu-toolchain-r-test
+        packages:
+            - g++-6
+
+script:
+    - make clean && make all
+    - ./bin/test/test_ray
+    - ./bin/test/test_sphere
+    - ./bin/test/test_vec3
